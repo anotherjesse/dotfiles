@@ -32,6 +32,8 @@ syntax on
 set background=dark
 colorscheme molokai
 
+set statusline=%{fugitive#statusline()}\ %F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
+
 let mapleader = ","
 
 nnoremap / /\v
@@ -91,7 +93,7 @@ nnoremap <leader>q gqip
 " ,v -> reselect the text that was just pasted
 nnoremap <leader>v V`]
 
-
+" double jj is esc
 inoremap jj <ESC>
 
 " ,w -> split horizontal
@@ -106,12 +108,29 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " NERD Tree
-
 noremap <F2> :NERDTreeToggle<cr>
 inoremap <F2> <esc>:NERDTreeToggle<cr>
 let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', '.*.pid', '.*\.o']
 au Filetype nerdtree setlocal nolist
- 
+
+" from termie
+if has("autocmd")
+    " Put these in an autocmd group, so that we can delete them easily.
+    augroup vimrcEx
+        " When editing a file, always jump to the last known cursor position.
+        " Don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        autocmd BufReadPost *
+                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                    \   exe "normal g`\"" |
+                    \ endif
+
+    augroup END
+
+    " Source the vimrc file after saving it
+    autocmd bufwritepost vimrc source $MYVIMRC
+endif " has("autocmd")
+
 
 if has('gui_running')
     set guifont=Menlo:h12
