@@ -20,7 +20,6 @@ set hidden
 set wildmenu
 set wildmode=list:longest
 set visualbell
-set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
@@ -133,7 +132,13 @@ endif " has("autocmd")
 
 
 if has('gui_running')
-    set guifont=Menlo:h12
+    set cursorline
+
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 11
+    else
+        set guifont=Menlo:h15
+    endif
 
     " Remove all the UI cruft
     set go-=T
