@@ -10,3 +10,9 @@
 [submodule "vim/bundle/vim-fugitive"]
 	path = vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/bundle/vim-ruby-runner"]
+	path = vim/bundle/vim-ruby-runner
+	url = git://github.com/henrik/vim-ruby-runner.git
+[submodule "vim/bundle/vim-rails"]
+	path = vim/bundle/vim-rails
+	url = git://github.com/tpope/vim-rails.git
