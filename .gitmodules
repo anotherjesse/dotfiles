@@ -15,4 +15,10 @@
 	url = git://github.com/henrik/vim-ruby-runner.git
 [submodule "vim/bundle/vim-rails"]
 	path = vim/bundle/vim-rails
-	url = git://github.com/tpope/vim-rails.git
+    url = git://github.com/tpope/vim-rails.git
+[submodule "vim/bundle/pyflakes-vim"]
+	path = vim/bundle/pyflakes-vim
+	url = https://github.com/kevinw/pyflakes-vim.git
+[submodule "vim/bundle/pyflakes"]
+	path = vim/bundle/pyflakes
+	url = https://github.com/kevinw/pyflakes.git
