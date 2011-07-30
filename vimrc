@@ -108,6 +108,13 @@ nnoremap <C-l> <C-w>l
 
 au FileType python set omnifunc=pythoncomplete#Complete
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+let g:pep8_map='<leader>8'
+
+if has("gui_running") 
+  highlight SpellBad term=underline gui=undercurl guisp=Orange 
+endif
+
+map <leader>td <Plug>TaskList
 
 
 " NERD Tree
