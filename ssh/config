@@ -1,3 +1,4 @@
+# based on http://www.stgraber.org/2012/07/17/easily-ssh-to-your-containers-and-vms-on-ubuntu-12-04-lts/
 Host *.lxc
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
