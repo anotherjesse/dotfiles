@@ -1,0 +1,37 @@
+#!/bin/bash
+
+name=$1
+
+# CREATE?
+
+e=`sudo lxc-ls -1 | grep "^$name$"`
+
+if [[ ! -n "$e" ]]; then
+    echo " -> Creating LXC container $name"
+    # container doesn't exist
+    sudo lxc-create -t ubuntu -n $name
+
+    echo " -> linking /home/jesse"
+    sudo mkdir /var/lib/lxc/$name/rootfs/home/jesse
+    sudo chown jesse /var/lib/lxc/$name/rootfs/home/jesse
+    echo -e "/home/jesse /var/lib/lxc/$name/rootfs/home/jesse none bind 0 0" | sudo tee -a /var/lib/lxc/$name/fstab
+fi
+
+
+# BOOT?
+
+f=`sudo lxc-info -n $name | grep STOPPED`
+
+if [[ -n "$f" ]]; then
+    echo " -> Booting LXC container $name"
+    sudo lxc-start -n $name -d
+
+    sleep 4
+
+    echo " -> injecting SSH creds"
+    mkdir /var/lib/lxc/$name/rootfs/home/ubuntu/.ssh
+    cat .ssh/id_rsa.pub > /var/lib/lxc/$name/rootfs/home/ubuntu/.ssh/authorized_keys
+fi
+
+echo " -> ssh to $name.lxc"
+ssh $name.lxc

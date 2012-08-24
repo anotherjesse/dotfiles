@@ -1,0 +1,20 @@
+#!/bin/bash
+
+name=$1
+
+# Stop?
+
+f=`sudo lxc-info -n $name | grep STOPPED`
+
+if [[ ! -n "$f" ]]; then
+    echo " -> Stopping LXC container $name"
+    sudo lxc-stop -n $name
+fi
+
+# Destroy?
+
+if [[ "$2" = "-k" ]]; then
+    echo " -> Destroying LXC container $name"
+    sudo lxc-destroy -n $name
+fi
+
