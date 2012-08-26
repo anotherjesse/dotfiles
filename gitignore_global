@@ -1,0 +1,15 @@
+*.log
+*.sql
+*.sqlite
+_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# VIM
+*~
+.*.swp
