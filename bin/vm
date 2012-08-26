@@ -8,9 +8,10 @@ url=http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64
 base=~/vm/precise-server-cloudimg-amd64-disk1.img
 # qemu-img convert "${disk_dist_imgz}" $base
 
+mkdir -p ~/vm/$name
 
 # Build the image
-vm_disk=~/vm/$name.img
+vm_disk=~/vm/$name/disk.img
 if [[ ! -e $vm_disk ]]; then
     echo " -> building vm image"
     qemu-img create -f qcow2 -b "$base" "$vm_disk"
@@ -18,25 +19,26 @@ fi
 
 
 # USER-DATA
-userdata=~/vm/$name.user-data
+userdata=~/vm/$name/user-data
 if [[ ! -e $userdata ]]; then
     echo " -> building userdata"
     cp ~/vm/base-user-data $userdata
     echo -n "hostname: $name" | tee -a $userdata
 fi
 
-seed_disk=~/vm/$name.seed.img
+seed_disk=~/vm/$name/seed.img
 if [[ ! -e $seed_disk ]]; then
     echo " -> building seed disk (userdata image)"
     make-seed-disk --disk-format=qcow2 $seed_disk $userdata
 fi
 
 # libvirt time
-xml=~/vm/$name.xml
+xml=~/vm/$name/libvirt.xml
+log=~/vm/$name/serial.log
 
 if [[ ! -e $xml ]]; then
     echo " -> building libvirt xml"
-    write-libvirt-xml "$vm_disk,$seed_disk" $name > $xml
+    write-libvirt-xml "$vm_disk,$seed_disk" $name default x86_64 2048 $log > $xml
 fi
 
 running=`virsh dominfo $name | grep running`

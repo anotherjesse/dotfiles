@@ -11,6 +11,7 @@ network=${3:-default}
 arch=${4:-x86_64}
 mem=${5:-4096}
 mem=$(($mem*1024)) # let user specify in M, but libvirt wants in k
+log=${6:-/tmp/$name-serial.log}
 
 OIFS="$IFS"; IFS=","; set -- $disks; IFS="$OIFS"
 
@@ -66,7 +67,7 @@ cat <<EOF
     -->
     <serial type='file'>
       <target port='0'/>
-      <source path="$PWD/${name}-serial.log"/>
+      <source path="${log}"/>
     </serial>
     <console type='pty'>
       <target type='serial' port='0'/>
