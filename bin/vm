@@ -1,48 +1,84 @@
 #!/bin/bash
 
-name=$1
+if [ "$#" -eq 0 ]; then
+    cmd=list
+fi
 
-# BASE
-# FIXME(ja): download the base image if it hasn't yet
-url=http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
-base=~/vm/precise-server-cloudimg-amd64-disk1.img
-# qemu-img convert "${disk_dist_imgz}" $base
+if [ "$#" -eq 1 ]; then
+    name=$1
+    cmd=up
+fi
 
-mkdir -p ~/vm/$name
-
-# Build the image
-vm_disk=~/vm/$name/disk.img
-if [[ ! -e $vm_disk ]]; then
-    echo " -> building vm image"
-    qemu-img create -f qcow2 -b "$base" "$vm_disk"
+if [ "$#" -eq 2 ]; then
+    name=$1
+    cmd=$2
 fi
 
 
-# USER-DATA
-userdata=~/vm/$name/user-data
-if [[ ! -e $userdata ]]; then
-    echo " -> building userdata"
-    cp ~/vm/base-user-data $userdata
-    echo -n "hostname: $name" | tee -a $userdata
+if [ "$cmd" == "list" ]; then
+    # maybe print IP?
+    pushd ~/vm > /dev/null
+    for dir in `ls`
+    do
+        if [ -d $dir ]; then
+            state=`virsh dominfo $dir 2>/dev/null | grep State | awk '{ print $NF }'`
+            echo "$dir $state"
+        fi
+    done
+    popd > /dev/null
 fi
 
-seed_disk=~/vm/$name/seed.img
-if [[ ! -e $seed_disk ]]; then
-    echo " -> building seed disk (userdata image)"
-    make-seed-disk --disk-format=qcow2 $seed_disk $userdata
+dest=~/vm/$name
+
+if [ "$cmd" == "up" ]; then
+
+    # BASE
+    # FIXME(ja): download the base image if it hasn't yet
+    url=http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
+    base=~/vm/precise-server-cloudimg-amd64-disk1.img
+    # qemu-img convert "${disk_dist_imgz}" $base
+
+    mkdir -p $dest
+
+    # Build the image
+    vm_disk=$dest/disk.img
+    if [[ ! -e $vm_disk ]]; then
+        echo " -> building vm image"
+        qemu-img create -f qcow2 -b "$base" "$vm_disk"
+    fi
+
+
+    # USER-DATA
+    userdata=$dest/user-data
+    if [[ ! -e $userdata ]]; then
+        echo " -> building userdata"
+        cp ~/vm/base-user-data $userdata
+        echo -n "hostname: $name" | tee -a $userdata
+    fi
+
+    seed_disk=$dest/seed.img
+    if [[ ! -e $seed_disk ]]; then
+        echo " -> building seed disk (userdata image)"
+        make-seed-disk --disk-format=qcow2 $seed_disk $userdata
+    fi
+
+    # libvirt time
+    xml=$dest/libvirt.xml
+    log=$dest/serial.log
+
+    if [[ ! -e $xml ]]; then
+        echo " -> building libvirt xml"
+        write-libvirt-xml "$vm_disk,$seed_disk" $name default x86_64 2048 $log > $xml
+    fi
+
+    running=`virsh dominfo $name | grep running`
+    if [[ "$running" == "" ]]; then
+        echo " -> booting"
+        virsh create $xml
+    fi
 fi
 
-# libvirt time
-xml=~/vm/$name/libvirt.xml
-log=~/vm/$name/serial.log
-
-if [[ ! -e $xml ]]; then
-    echo " -> building libvirt xml"
-    write-libvirt-xml "$vm_disk,$seed_disk" $name default x86_64 2048 $log > $xml
-fi
-
-running=`virsh dominfo $name | grep running`
-if [[ "$running" == "" ]]; then
-    echo " -> booting"
-    virsh create $xml
+if [ "$cmd" == "down" ]; then
+    virsh destroy $name
+    rm -rf $dest
 fi
