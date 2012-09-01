@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# since nm-applet doesn't have a rescan :(
+
+sudo iwlist wlan1 scan | grep ESSID | cut -d"\"" -f2
