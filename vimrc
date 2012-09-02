@@ -29,7 +29,8 @@ set undofile
 
 syntax on
 set background=dark
-colorscheme molokai
+" colorscheme molokai
+colorscheme vividchalk
 
 set statusline=%{fugitive#statusline()}\ %F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
 
