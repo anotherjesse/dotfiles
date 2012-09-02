@@ -30,7 +30,7 @@ if [[ -n "$f" ]]; then
 
     echo " -> injecting SSH creds"
     mkdir /var/lib/lxc/$name/rootfs/home/ubuntu/.ssh
-    cat .ssh/id_rsa.pub > /var/lib/lxc/$name/rootfs/home/ubuntu/.ssh/authorized_keys
+    cat ~/.ssh/id_rsa.pub > /var/lib/lxc/$name/rootfs/home/ubuntu/.ssh/authorized_keys
 fi
 
 echo " -> ssh to $name.lxc"
