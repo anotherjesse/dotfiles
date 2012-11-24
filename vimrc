@@ -30,7 +30,18 @@ set undofile
 syntax on
 set background=dark
 
+" don't put .swp files in the cwd, put them in .vim
+if isdirectory($HOME . '/.vim/swap') == 0
+    :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+endif
 set directory^=$HOME/.vim/swap//
+
+" don't put undofiles (un~) in the cwd, put them in .vim
+if isdirectory($HOME . '/.vim/undo') == 0
+    :silent !mkdir -p ~/.vim/undo >/dev/null 2>&1
+endif
+set undodir^=$HOME/.vim/undo//
+
 
 " colorscheme molokai
 colorscheme vividchalk
