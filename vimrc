@@ -111,6 +111,8 @@ au FileType python set omnifunc=pythoncomplete#Complete
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 let g:pep8_map='<leader>8'
 
+let g:vimwiki_list = [{'path': '~/Dropbox/Apps/notesthis.com/notes/', 'syntax': 'markdown', 'ext': '.txt'}]
+
 if has("gui_running") 
   highlight SpellBad term=underline gui=undercurl guisp=Orange 
 endif
