@@ -29,6 +29,9 @@ set undofile
 
 syntax on
 set background=dark
+
+set directory^=$HOME/.vim/swap//
+
 " colorscheme molokai
 colorscheme vividchalk
 
@@ -148,8 +151,13 @@ endif " has("autocmd")
 if has('gui_running')
     set cursorline
 
+    " powerline
+    " let g:Powerline_symbols = 'fance'
+
+
     if has("gui_gtk2")
-        set guifont=Inconsolata\ 11
+        " set guifont=Inconsolata\ 11
+        set guifont=Mono\ Dyslexic\ 11
     else
         set guifont=Menlo:h15
     endif
