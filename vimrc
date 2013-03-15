@@ -127,6 +127,12 @@ let g:pep8_map='<leader>8'
 
 let g:vimwiki_list = [{'path': '~/Dropbox/Apps/notesthis.com/notes/', 'syntax': 'markdown', 'ext': '.txt'}]
 
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](.git|.hg|.svn|ebin)$',
+  \ 'file': '\v\.(exe|so|dll|beam|pyc)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
 if has("gui_running") 
   highlight SpellBad term=underline gui=undercurl guisp=Orange 
 endif
