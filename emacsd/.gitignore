@@ -3,3 +3,4 @@ elpa/archives
 projectile-bookmarks.eld
 .smex-items
 places
+*.elc
