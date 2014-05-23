@@ -7,3 +7,5 @@
     ui = auto
 [gitreview]
 	username = anotherjesse
+[push]
+	default = simple
