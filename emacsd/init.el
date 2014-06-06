@@ -12,7 +12,9 @@
                            emmet-mode
                            projectile
                            haskell-mode
-                           markdown-mode))
+                           markdown-mode
+                           org
+                           org-mime))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
