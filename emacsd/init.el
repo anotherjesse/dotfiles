@@ -13,6 +13,7 @@
                            projectile
                            haskell-mode
                            markdown-mode
+                           expand-region
                            org
                            org-mime))
 
