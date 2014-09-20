@@ -87,5 +87,5 @@
       cider-repl-popup-stacktraces t)
 
 ;; Useful keybindings when using Clojure from Org
-(org-defkey org-mode-map "\C-x\C-e" 'cider-eval-last-sexp)
-(org-defkey org-mode-map "\C-c\C-d" 'cider-doc)
+;;(org-defkey org-mode-map "\C-x\C-e" 'cider-eval-last-sexp)
+;; (org-defkey org-mode-map "\C-c\C-d" 'cider-doc)
