@@ -49,8 +49,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/configs/")
 
-(require 'evil-settings)
-(require 'evil-keybindings)
 (require 'projectile-settings)
 
 ;; Flyspell often slows down editing so it's turned off
@@ -69,3 +67,24 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
+
+(setq auto-mode-alist
+      (append
+       (list
+        '("\\.epub$" . archive-mode))
+       auto-mode-alist))
+(setq auto-coding-alist
+      (append
+       (list
+        '("\\.epub$" . no-conversion))
+       auto-coding-alist))
+
+;; cider special stuff from http://bzg.fr/emacs-org-babel-overtone-intro.html
+(setq nrepl-hide-special-buffers t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-popup-stacktraces nil
+      cider-repl-popup-stacktraces t)
+
+;; Useful keybindings when using Clojure from Org
+(org-defkey org-mode-map "\C-x\C-e" 'cider-eval-last-sexp)
+(org-defkey org-mode-map "\C-c\C-d" 'cider-doc)

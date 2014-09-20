@@ -8,14 +8,14 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(evil evil-leader evil-numbers surround
-                           emmet-mode
-                           projectile
-                           haskell-mode
-                           markdown-mode
-                           expand-region
-                           org
-                           org-mime))
+(defvar my-packages '(surround
+                      emmet-mode
+                      projectile
+                      haskell-mode
+                      markdown-mode
+                      expand-region
+                      org
+                      org-mime))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
