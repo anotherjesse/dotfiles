@@ -8,6 +8,10 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 ZSH_THEME="gianu"
 
+if [[ -a /usr/local/Cellar/emacs/24.3/bin/emacs ]]; then
+  alias emacs="/usr/local/Cellar/emacs/24.3/bin/emacs"
+fi
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
