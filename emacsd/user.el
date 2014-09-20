@@ -1,6 +1,7 @@
 ;; This is where your customizations should live
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (setq-default indent-tabs-mode nil)
 
 ;; env PATH
