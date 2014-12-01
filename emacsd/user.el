@@ -45,7 +45,12 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 ;; Uncomment this to increase font size
 ;; (set-face-attribute 'default nil :height 140)
-(load-theme 'tomorrow-night-bright t)
+(load-theme 'deeper-blue t)
+(set-face-attribute 'default nil
+                    :family "Mono Dyslexic"
+                    :height 140
+                    :weight 'normal
+                    :width 'normal)
 
 
 (add-to-list 'load-path "~/.emacs.d/configs/")
@@ -68,6 +73,7 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-return" 'cider-eval-buffer))
 
 (setq auto-mode-alist
       (append
@@ -89,3 +95,10 @@
 ;; Useful keybindings when using Clojure from Org
 ;;(org-defkey org-mode-map "\C-x\C-e" 'cider-eval-last-sexp)
 ;; (org-defkey org-mode-map "\C-c\C-d" 'cider-doc)
+
+(require 'rainbow-delimiters)
+(global-rainbow-delimiters-mode)
+
+(global-git-gutter-mode +1)
+(setq-default indicate-buffer-boundaries 'left)
+(setq-default indicate-empty-lines +1)
